@@ -1,0 +1,32 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MyFileExplorer" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#FFE082</item>
+        <item name="colorPrimaryVariant">#FFA000</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#AED851</item>
+        <item name="colorSecondaryVariant">#689F38</item>
+        <item name="colorOnSecondary">#000000</item>
+
+        <!-- Background colors -->
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="colorOnBackground">#000000</item>
+
+        <!-- Surface colors -->
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+
+        <!-- Error colors -->
+        <item name="colorError">#FF4A08</item>
+        <item name="colorOnError">#FFFFFF</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+
+</resources>
