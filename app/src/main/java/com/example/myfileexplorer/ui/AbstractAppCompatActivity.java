@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public abstract class AbstractAppCompatActivity extends AppCompatActivity {
 
     protected final File INTERNAL_STORAGE_ROOT = Environment.getExternalStorageDirectory();
-    protected File rootFileForCurrentScreen;
+    protected File rootFolderForCurrentScreen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,13 +58,13 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
      */
     public boolean isParentFileOfRootFileInsideInternalStorage() {
 
-        if (rootFileForCurrentScreen == null)
+        if (rootFolderForCurrentScreen == null)
             return false;
 
-        if (rootFileForCurrentScreen.getParentFile() == null)
+        if (rootFolderForCurrentScreen.getParentFile() == null)
             return false;
 
-        return rootFileForCurrentScreen.getParentFile().getAbsolutePath()
+        return rootFolderForCurrentScreen.getParentFile().getAbsolutePath()
                 .startsWith(INTERNAL_STORAGE_ROOT.getAbsolutePath());
     }
 

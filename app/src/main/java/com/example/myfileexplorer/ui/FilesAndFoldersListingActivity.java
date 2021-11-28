@@ -3,8 +3,6 @@ package com.example.myfileexplorer.ui;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,14 +17,14 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class InternalStorageActivity extends AbstractAppCompatActivity {
+public class FilesAndFoldersListingActivity extends AbstractAppCompatActivity {
 
     @BindView(R.id.rv_list_files)
-    public RecyclerView filesToDisplayRecyclerView;
+    public RecyclerView filesAndFoldersRecyclerView;
 
     private List<File> filesToDisplay;
 
-    private FilesToDisplayAdapter filedToDisplayRecyclerViewAdapter;
+    private FilesAndFoldersListingAdapter filesAndFoldersListingAdapter;
 
     @Override
     public int getActivityLayout() {
@@ -37,41 +35,41 @@ public class InternalStorageActivity extends AbstractAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rootFileForCurrentScreen = INTERNAL_STORAGE_ROOT;
+        rootFolderForCurrentScreen = INTERNAL_STORAGE_ROOT;
         StorageManager storageManager = (StorageManager) getSystemService(STORAGE_SERVICE);
         initializeAndLoadRecyclerView();
     }
 
     public void initializeAndLoadRecyclerView() {
-        filedToDisplayRecyclerViewAdapter = new FilesToDisplayAdapter(this, filesToDisplay, (file, type) -> {
+        filesAndFoldersListingAdapter = new FilesAndFoldersListingAdapter(this, filesToDisplay, (file, type) -> {
 
             if(type.equals("folder_clicked")) {
-                rootFileForCurrentScreen = file;
-                loadRecyclerViewWithRootFileAsParent();
+                rootFolderForCurrentScreen = file;
+                loadRecyclerViewWithRootFolderAsParent();
             }
 
         });
 
-        filesToDisplayRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        filesToDisplayRecyclerView.setAdapter(filedToDisplayRecyclerViewAdapter);
+        filesAndFoldersRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        filesAndFoldersRecyclerView.setAdapter(filesAndFoldersListingAdapter);
 
-        loadRecyclerViewWithRootFileAsParent();
+        loadRecyclerViewWithRootFolderAsParent();
 
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
-    public void loadRecyclerViewWithRootFileAsParent() {
-        filesToDisplay = FileUtils.getChildrenForFile(rootFileForCurrentScreen.getAbsoluteFile());
-        filedToDisplayRecyclerViewAdapter.setFilesToDisplay(filesToDisplay);
-        filedToDisplayRecyclerViewAdapter.notifyDataSetChanged();
+    public void loadRecyclerViewWithRootFolderAsParent() {
+        filesToDisplay = FileUtils.getChildrenForFile(rootFolderForCurrentScreen.getAbsoluteFile());
+        filesAndFoldersListingAdapter.setFilesAndFoldersToDisplay(filesToDisplay);
+        filesAndFoldersListingAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onBackPressed() {
         if (isParentFileOfRootFileInsideInternalStorage()) {
-            rootFileForCurrentScreen = rootFileForCurrentScreen.getParentFile();
-            loadRecyclerViewWithRootFileAsParent();
+            rootFolderForCurrentScreen = rootFolderForCurrentScreen.getParentFile();
+            loadRecyclerViewWithRootFolderAsParent();
         } else {
             finish();
         }
@@ -81,14 +79,14 @@ public class InternalStorageActivity extends AbstractAppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("rootFileForCurrentScreen",rootFileForCurrentScreen.toString());
+        outState.putString("rootFileForCurrentScreen", rootFolderForCurrentScreen.toString());
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         String rootFilePathFromSavedInstanceState  = savedInstanceState.getString("rootFileForCurrentScreen");
-        rootFileForCurrentScreen = new File(rootFilePathFromSavedInstanceState);
-        loadRecyclerViewWithRootFileAsParent();
+        rootFolderForCurrentScreen = new File(rootFilePathFromSavedInstanceState);
+        loadRecyclerViewWithRootFolderAsParent();
     }
 }

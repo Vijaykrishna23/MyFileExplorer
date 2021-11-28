@@ -6,14 +6,14 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myfileexplorer.ui.FilesToDisplayAdapter;
+import com.example.myfileexplorer.ui.FilesAndFoldersListingAdapter;
 
 import java.io.File;
 
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
 
     protected File currentFileInViewHolder;
-    protected FilesToDisplayAdapter.FilesToDisplayInterface communicationInterface;
+    protected FilesAndFoldersListingAdapter.FilesAndFoldersListingInterface communicationInterface;
     protected Context activityContext;
 
     public BaseViewHolder(@NonNull View itemView) {
@@ -23,7 +23,7 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder implements 
         activityContext = itemView.getContext();
     }
 
-    public void performBind(File currentFileInViewHolder, Context activityContext, FilesToDisplayAdapter.FilesToDisplayInterface communicationInterface) {
+    public void performBind(File currentFileInViewHolder, Context activityContext, FilesAndFoldersListingAdapter.FilesAndFoldersListingInterface communicationInterface) {
         this.currentFileInViewHolder = currentFileInViewHolder;
         this.communicationInterface= communicationInterface;
         this.activityContext = activityContext;

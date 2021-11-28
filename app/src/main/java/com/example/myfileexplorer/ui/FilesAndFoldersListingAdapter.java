@@ -18,20 +18,20 @@ import com.example.myfileexplorer.ui.viewholder.FolderViewHolder;
 import java.io.File;
 import java.util.List;
 
-public class FilesToDisplayAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
+public class FilesAndFoldersListingAdapter extends RecyclerView.Adapter<BaseViewHolder>  {
 
     private final Context activityContext;
-    private List<File> filesToDisplay;
-    private final FilesToDisplayInterface communicationInterface;
+    private List<File> filesAndFoldersToDisplay;
+    private final FilesAndFoldersListingInterface communicationInterface;
 
-    public FilesToDisplayAdapter(Context activityContext, List<File> filesToDisplay, FilesToDisplayInterface communicationInterface) {
+    public FilesAndFoldersListingAdapter(Context activityContext, List<File> filesAndFoldersToDisplay, FilesAndFoldersListingInterface communicationInterface) {
         this.activityContext = activityContext;
-        this.filesToDisplay = filesToDisplay;
+        this.filesAndFoldersToDisplay = filesAndFoldersToDisplay;
         this.communicationInterface = communicationInterface;
     }
 
-    public void setFilesToDisplay(List<File> filesToDisplay) {
-        this.filesToDisplay = filesToDisplay;
+    public void setFilesAndFoldersToDisplay(List<File> filesAndFoldersToDisplay) {
+        this.filesAndFoldersToDisplay = filesAndFoldersToDisplay;
     }
 
 
@@ -56,21 +56,21 @@ public class FilesToDisplayAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
-        holder.performBind(filesToDisplay.get(position),activityContext, communicationInterface);
+        holder.performBind(filesAndFoldersToDisplay.get(position),activityContext, communicationInterface);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return AppUtils.getViewType(filesToDisplay.get(position));
+        return AppUtils.getViewType(filesAndFoldersToDisplay.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return filesToDisplay.size();
+        return filesAndFoldersToDisplay.size();
     }
 
 
-    public interface FilesToDisplayInterface {
+    public interface FilesAndFoldersListingInterface {
         void someEvent(File file,String type);
     }
 

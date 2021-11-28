@@ -1,12 +1,10 @@
 package com.example.myfileexplorer.ui;
 
-import android.content.Intent;
-
 import com.example.myfileexplorer.R;
 
 import butterknife.OnClick;
 
-public class MainActivity extends AbstractAppCompatActivity{
+public class VolumesListingActivity extends AbstractAppCompatActivity{
 
     @Override
     public int getActivityLayout() {
@@ -15,7 +13,7 @@ public class MainActivity extends AbstractAppCompatActivity{
 
     @OnClick(R.id.btn_internal_storage)
     public void openInternalStorage() {
-        moveToActivity(InternalStorageActivity.class);
+        moveToActivity(FilesAndFoldersListingActivity.class);
     }
 
 }
