@@ -3,7 +3,6 @@ package com.example.myfileexplorer.ui;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 
 import androidx.annotation.Nullable;
@@ -12,11 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myfileexplorer.utils.Constants;
 import com.example.myfileexplorer.utils.PermissionUtils;
 
-import java.io.File;
 import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
 
+/**
+ * Abstract Activity class with common features to keep the code DRY.
+ * Also binds ButterKnife to the view, so no need to bind in the
+ * child classes.
+ */
 public abstract class AbstractAppCompatActivity extends AppCompatActivity {
 
     @Override
@@ -29,15 +32,14 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
 
 
         //Disables FileUriExposedException by overriding the method on the class.
-        if(Build.VERSION.SDK_INT>=24){
-            try{
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
                 Method disableDeathOnFileUriExposureMethod = StrictMode.class.getMethod(Constants.FORCE_OVERRIDE_DISABLE_FILE_URI_EXCEPTION_METHOD_NAME);
                 disableDeathOnFileUriExposureMethod.invoke(null);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
 
 
     }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfileexplorer.R;
 import com.example.myfileexplorer.schema.FileAndFolder;
+import com.example.myfileexplorer.utils.Constants;
 import com.example.myfileexplorer.utils.FileUtils;
 
 import java.io.File;
@@ -20,6 +21,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * The adapter class to lists the files and folders of the root Directory.
+ * Given the list, it displays the folders and files and sets the onClickListener
+ * respectively.
+ */
 public class FilesAndFoldersListingAdapter extends RecyclerView.Adapter<FilesAndFoldersListingAdapter.FilesAndFoldersListingViewHolder> {
 
     private final Context activityContext;
@@ -57,10 +63,9 @@ public class FilesAndFoldersListingAdapter extends RecyclerView.Adapter<FilesAnd
         holder.fileFolderIcon.setImageResource(currentFileAndFolder.fileAndFolderIcon);
 
         holder.itemView.setOnClickListener(v -> {
-            if(currentFileAndFolder.isFolder()) {
-                communicationInterface.someEvent(currentFileAndFolder.javaIoFile, "folder_clicked");
-            }
-            else {
+            if (currentFileAndFolder.isFolder()) {
+                communicationInterface.someEvent(currentFileAndFolder.javaIoFile, Constants.FOLDER_CLICKED);
+            } else {
                 FileUtils.openAppChooserBasedOnFileExtension(activityContext, currentFileAndFolder.javaIoFile);
             }
         });
@@ -76,6 +81,11 @@ public class FilesAndFoldersListingAdapter extends RecyclerView.Adapter<FilesAnd
         void someEvent(File file, String eventType);
     }
 
+    /**
+     * ViewHolder class for file and folder.
+     * contains the name, the items or the size and the icon
+     * that is configurable in the adapter.
+     */
     static class FilesAndFoldersListingViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_folder)

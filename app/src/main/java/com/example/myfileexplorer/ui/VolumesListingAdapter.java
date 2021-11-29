@@ -11,19 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfileexplorer.R;
-import com.example.myfileexplorer.schema.VolumeSchema;
+import com.example.myfileexplorer.schema.CustomVolume;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VolumesListingAdapter extends RecyclerView.Adapter<VolumesListingAdapter.VolumesListingViewHolder>{
+/**
+ * Adapter class for the `VolumeSchema` object. Displays the name of the volume in a button.
+ * And when user clicks the button, redirects to the `FileAndFolderListingActivity`.
+ */
+public class VolumesListingAdapter extends RecyclerView.Adapter<VolumesListingAdapter.VolumesListingViewHolder> {
 
-    private final List<VolumeSchema> volumeList;
+    private final List<CustomVolume> volumeList;
     private final Context activityContext;
 
-    public VolumesListingAdapter(Context activityContext, List<VolumeSchema> volumeList) {
+    public VolumesListingAdapter(Context activityContext, List<CustomVolume> volumeList) {
         this.volumeList = volumeList;
         this.activityContext = activityContext;
     }
@@ -43,12 +47,12 @@ public class VolumesListingAdapter extends RecyclerView.Adapter<VolumesListingAd
     @Override
     public void onBindViewHolder(@NonNull VolumesListingViewHolder holder, int position) {
 
-        VolumeSchema currentVolume = volumeList.get(position);
+        CustomVolume currentVolume = volumeList.get(position);
         holder.volumeNameButton.setText(currentVolume.volumeName);
 
         holder.volumeNameButton.setOnClickListener((v -> {
             Intent intent = new Intent(activityContext, FilesAndFoldersListingActivity.class);
-            intent.putExtra("rootDirectory",currentVolume.volumeFileWithPath);
+            intent.putExtra("rootDirectory", currentVolume.volumeFileWithPath);
             activityContext.startActivity(intent);
         }));
     }
@@ -58,7 +62,11 @@ public class VolumesListingAdapter extends RecyclerView.Adapter<VolumesListingAd
         return volumeList.size();
     }
 
-     static class VolumesListingViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * ViewHolder class for the single button where the name of the volume
+     * is displayed.
+     */
+    static class VolumesListingViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.volume_name_button)
         public TextView volumeNameButton;

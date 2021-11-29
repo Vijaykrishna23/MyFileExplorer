@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfileexplorer.R;
-import com.example.myfileexplorer.schema.VolumeSchema;
+import com.example.myfileexplorer.schema.CustomVolume;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,12 +19,16 @@ import java.util.stream.Collectors;
 
 import butterknife.BindView;
 
+/**
+ * The opening screen of the application.
+ * Lists the volumes user has in his/her device.
+ */
 public class VolumesListingActivity extends AbstractAppCompatActivity {
 
     @BindView(R.id.volume_listing_recycler_view)
     public RecyclerView volumeListingRecyclerView;
 
-    private List<VolumeSchema> volumesInDevice;
+    private List<CustomVolume> volumesInDevice;
 
     @Override
     public int getActivityLayout() {
@@ -42,7 +46,11 @@ public class VolumesListingActivity extends AbstractAppCompatActivity {
 
     }
 
-    private void loadRecyclerView(List<VolumeSchema> volumeList) {
+    /**
+     * Given the list of volumes of the custom class `VolumeSchema`, displays
+     * buttons with the names associated.
+     */
+    private void loadRecyclerView(List<CustomVolume> volumeList) {
         VolumesListingAdapter volumesListingAdapter = new VolumesListingAdapter(
                 this,
                 volumeList
@@ -52,22 +60,32 @@ public class VolumesListingActivity extends AbstractAppCompatActivity {
         volumeListingRecyclerView.setAdapter(volumesListingAdapter);
     }
 
+    /**
+     * Gets all the volumes in the device and maps it to the custom class
+     * `VolumeSchema`. Two different approaches are used to get the volume list.
+     * If device's android version is greater than Nougat, storage manager is used.
+     * <p>
+     * It is used for readable names of the volume.
+     * Or `getExternalFilesDirs` method is used.
+     * <p>
+     * The path is used as the name of the volume, since the file object doesn't have
+     * a name attribute.
+     */
+    public List<CustomVolume> getVolumesInDeviceListBasedOnAndroidVersion() {
 
-    public List<VolumeSchema> getVolumesInDeviceListBasedOnAndroidVersion() {
-
-        List<VolumeSchema> volumeList = new ArrayList<>();
+        List<CustomVolume> volumeList = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             StorageManager storageManagerService = (StorageManager) getSystemService(STORAGE_SERVICE);
             List<StorageVolume> storageVolumes = storageManagerService.getStorageVolumes();
             volumeList = storageVolumes
                     .stream()
-                    .map((storageVolume) -> VolumeSchema.generateVolumeObjectFromStorageVolume(this, storageVolume))
+                    .map((storageVolume) -> CustomVolume.generateVolumeObjectFromStorageVolume(this, storageVolume))
                     .collect(Collectors.toList());
         } else {
             File[] externalDirectories = getExternalFilesDirs(null);
             for (File externalDirectory : externalDirectories) {
-                volumeList.add(VolumeSchema.generateVolumeObjectFromExternalDirectoryFile(externalDirectory));
+                volumeList.add(CustomVolume.generateVolumeObjectFromExternalDirectoryFile(externalDirectory));
             }
         }
 

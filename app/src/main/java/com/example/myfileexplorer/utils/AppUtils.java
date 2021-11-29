@@ -10,18 +10,6 @@ import java.util.List;
 
 public class AppUtils {
 
-
-    /**
-     * Returns the viewType based on the type of
-     * the file. i.e, if its a directory it returns
-     * folder type or returns file type
-     */
-    public static int getViewType(File file) {
-        if(file.isDirectory())
-            return Constants.VIEW_TYPE_FOLDER;
-        return Constants.VIEW_TYPE_FILE;
-    }
-
     /**
      * Short hand utility function to show toast message to the user.
      * Can be used across all classes, must pass in activityContext.

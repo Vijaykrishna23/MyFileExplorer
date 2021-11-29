@@ -117,6 +117,11 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Given the volume uuid of the storageVolume, returns
+     * the root file.
+     * Note: uuid is null for the internal storage
+     */
     public static File getFileFromVolumeUuid(String volumeUuid) {
 
         //Default case returns internal storage | /storage/emulated/0/
@@ -127,24 +132,32 @@ public class FileUtils {
         return new File("/storage/", volumeUuid);
     }
 
+    /**
+     * Given the externalDirectoryFile returns the root path of the
+     * volume.
+     * <p>
+     * e.g., /storage/emulated/0/Android/data.., /storage/{volume-uuid}/Android/data..
+     * returns the path before the string 'Android' by splitting the string
+     * and returning the first element of the array.
+     */
     public static String getRootDirectoryFileNameFromExternalDirectoryFile(File externalDirectoryFile) {
         return externalDirectoryFile.toString().split("Android")[0];
     }
 
+    /**
+     * Given a file, returns the drawable icon which is to be displayed on the ui
+     * based on the extension/mimeType.
+     * <p>
+     * Now only folder and file type is done. Rest should be done later
+     */
+
+//    TODO: Add drawables and return them based on extension
     public static int getFileAndFolderIconBasedOnTypeAndExtension(Context activityContext, File file) {
         if (file.isDirectory())
             return R.drawable.ic_baseline_folder_24;
 
         return R.drawable.ic_baseline_image_24;
 
-    }
-
-
-    public static File getParentFile(File currentFile) {
-        if (currentFile == null)
-            return null;
-
-        return currentFile.getParentFile();
     }
 
 
