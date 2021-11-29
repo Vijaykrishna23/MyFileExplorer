@@ -7,7 +7,7 @@
     tools:context=".ui.FilesAndFoldersListingActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list_files"
+        android:id="@+id/files_folders_listing_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

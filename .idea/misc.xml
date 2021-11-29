@@ -7,8 +7,11 @@
         <entry key="app/src/main/res/drawable/ic_icons8_file.xml" value="0.14722222222222223" />
         <entry key="app/src/main/res/drawable/ic_unknown_file.xml" value="0.14722222222222223" />
         <entry key="app/src/main/res/drawable/unknown_file.xml" value="0.14722222222222223" />
+        <entry key="app/src/main/res/layout/activity_files_and_folders_listing.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_internal_storage.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.10277777777777777" />
+        <entry key="app/src/main/res/layout/activity_volume_listing.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/component_button.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/item_single_file.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/item_single_folder.xml" value="0.10277777777777777" />
       </map>

@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.text.format.Formatter;
 import android.webkit.MimeTypeMap;
 
@@ -86,6 +87,21 @@ public class FileUtils {
             AppUtils.showToastMessage(activityContext,e.getMessage());
         }
     }
+
+    public static File getFileFromVolumeUuid(String volumeUuid) {
+
+        //Default case returns internal storage | /storage/emulated/0/
+        if(volumeUuid == null)
+            return Environment.getExternalStorageDirectory();
+
+        //appends uuid to the storage directory
+        return new File("/storage/",volumeUuid);
+    }
+
+    public static String getRootDirectoryFileNameFromExternalDirectoryFile(File externalDirectoryFile) {
+        return externalDirectoryFile.toString().split("Android")[0];
+    }
+
 
 
 

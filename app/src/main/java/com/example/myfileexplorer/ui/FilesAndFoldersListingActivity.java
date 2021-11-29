@@ -19,7 +19,7 @@ import butterknife.BindView;
 
 public class FilesAndFoldersListingActivity extends AbstractAppCompatActivity {
 
-    @BindView(R.id.rv_list_files)
+    @BindView(R.id.files_folders_listing_recycler_view)
     public RecyclerView filesAndFoldersRecyclerView;
 
     private List<File> filesToDisplay;
@@ -28,14 +28,14 @@ public class FilesAndFoldersListingActivity extends AbstractAppCompatActivity {
 
     @Override
     public int getActivityLayout() {
-        return R.layout.activity_internal_storage;
+        return R.layout.activity_files_and_folders_listing;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rootFolderForCurrentScreen = INTERNAL_STORAGE_ROOT;
+        rootFolderForCurrentScreen = (File) getIntent().getSerializableExtra("rootDirectory");
         StorageManager storageManager = (StorageManager) getSystemService(STORAGE_SERVICE);
         initializeAndLoadRecyclerView();
     }

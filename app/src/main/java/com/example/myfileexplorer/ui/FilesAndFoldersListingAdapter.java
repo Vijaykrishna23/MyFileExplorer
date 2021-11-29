@@ -41,10 +41,10 @@ public class FilesAndFoldersListingAdapter extends RecyclerView.Adapter<BaseView
         View view;
         switch (viewType) {
             case Constants.VIEW_TYPE_FOLDER:
-                view = LayoutInflater.from(activityContext).inflate(R.layout.item_single_folder, parent, false);
+                view = LayoutInflater.from(activityContext).inflate(R.layout.component_folder, parent, false);
                 return new FolderViewHolder(view);
             case Constants.VIEW_TYPE_FILE:
-                view = LayoutInflater.from(activityContext).inflate(R.layout.item_single_file,parent,false);
+                view = LayoutInflater.from(activityContext).inflate(R.layout.component_file,parent,false);
                 return new FileViewHolder(view);
             default:
                 throw new IllegalArgumentException();
