@@ -48,7 +48,7 @@ public class VolumesListingAdapter extends RecyclerView.Adapter<VolumesListingAd
 
         holder.volumeNameButton.setOnClickListener((v -> {
             Intent intent = new Intent(activityContext, FilesAndFoldersListingActivity.class);
-            intent.putExtra("rootDirectory",currentVolume.volumePath);
+            intent.putExtra("rootDirectory",currentVolume.volumeFileWithPath);
             activityContext.startActivity(intent);
         }));
     }

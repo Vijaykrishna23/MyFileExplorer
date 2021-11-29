@@ -13,20 +13,20 @@ import java.io.File;
 public class VolumeSchema {
 
     public String volumeName;
-    public File volumePath;
+    public File volumeFileWithPath;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static VolumeSchema generateVolumeObjectFromStorageVolume(Context activityContext, StorageVolume storageVolume) {
         VolumeSchema tempVolume = new VolumeSchema();
         tempVolume.volumeName = storageVolume.getDescription(activityContext);
-        tempVolume.volumePath = FileUtils.getFileFromVolumeUuid(storageVolume.getUuid());
+        tempVolume.volumeFileWithPath = FileUtils.getFileFromVolumeUuid(storageVolume.getUuid());
         return tempVolume;
     }
 
     public static VolumeSchema generateVolumeObjectFromExternalDirectoryFile(File externalDirectoryFile) {
         VolumeSchema tempVolume = new VolumeSchema();
         tempVolume.volumeName = FileUtils.getRootDirectoryFileNameFromExternalDirectoryFile(externalDirectoryFile);
-        tempVolume.volumePath = new File(tempVolume.volumeName);
+        tempVolume.volumeFileWithPath = new File(tempVolume.volumeName);
         return tempVolume;
     }
 }

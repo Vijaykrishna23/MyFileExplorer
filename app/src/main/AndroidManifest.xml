@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyFileExplorer">
         <activity android:name=".ui.FilesAndFoldersListingActivity" />
-        <activity android:name=".ui.VolumesListingActivity">
+        <activity android:name=".ui.VolumesListingActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

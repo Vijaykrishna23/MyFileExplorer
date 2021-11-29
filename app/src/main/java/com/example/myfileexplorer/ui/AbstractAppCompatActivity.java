@@ -19,9 +19,6 @@ import butterknife.ButterKnife;
 
 public abstract class AbstractAppCompatActivity extends AppCompatActivity {
 
-    protected final File INTERNAL_STORAGE_ROOT = Environment.getExternalStorageDirectory();
-    protected File rootFolderForCurrentScreen;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,23 +47,6 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
      */
     public abstract int getActivityLayout();
 
-    /**
-     * If the current file path starts with INTERNAL_STORAGE_ROOT path,
-     * this returns true.
-     * Used to check if the user is on main page or interior page
-     * on back pressed.
-     */
-    public boolean isParentFileOfRootFileInsideInternalStorage() {
-
-        if (rootFolderForCurrentScreen == null)
-            return false;
-
-        if (rootFolderForCurrentScreen.getParentFile() == null)
-            return false;
-
-        return rootFolderForCurrentScreen.getParentFile().getAbsolutePath()
-                .startsWith(INTERNAL_STORAGE_ROOT.getAbsolutePath());
-    }
 
     /**
      * Given the classname, navigates to the activity and pushes the current

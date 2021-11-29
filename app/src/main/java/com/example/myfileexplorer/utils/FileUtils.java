@@ -8,12 +8,16 @@ import android.os.Environment;
 import android.text.format.Formatter;
 import android.webkit.MimeTypeMap;
 
+import com.example.myfileexplorer.R;
+import com.example.myfileexplorer.schema.FileAndFolder;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class FileUtils {
+
 
     /**
      * Given the root path, returns all the children files.
@@ -33,10 +37,35 @@ public class FileUtils {
     }
 
     /**
+     * Given the currentFile path, gets the children
+     * and converts each child to corresponding FileAndFolder object
+     * and returns new List made of FileAndFolder object
+     */
+    public static List<FileAndFolder> getChildrenFileAndFolderListForRootFileAndFolder(Context activityContext, File currentFile) {
+        List<File> childrenFiles = getChildrenForFile(currentFile);
+
+        List<FileAndFolder> childrenFileAndFolderList = new ArrayList<>();
+
+        for (File childrenFile : childrenFiles) {
+            FileAndFolder fileAndFolder = FileAndFolder.fromJavaIoFile(activityContext, childrenFile);
+            childrenFileAndFolderList.add(fileAndFolder);
+        }
+
+
+        return childrenFileAndFolderList;
+    }
+
+
+    public static String getFileAndFolderDescriptionBasedOnType(Context activityContext, File currentFile) {
+        return currentFile.isDirectory() ? getDescriptionForFolder(currentFile)
+                : getDescriptionForFile(activityContext, currentFile);
+    }
+
+    /**
      * Just a helper function that concatenates the number of children
      * and the string "items" to display to the user.
      */
-    public static String getDisplayTextForNumberOfItemsInFolder(File currentFile) {
+    public static String getDescriptionForFolder(File currentFile) {
         return FileUtils.getChildrenForFile(currentFile).size() + " items";
     }
 
@@ -45,7 +74,7 @@ public class FileUtils {
      * such as KB, MB and GB with two decimal places.
      * e.g. 12.39KB
      */
-    public static String getDisplayTextForFileSize(Context activityContext, File currentFile) {
+    public static String getDescriptionForFile(Context activityContext, File currentFile) {
         return Formatter.formatFileSize(activityContext, currentFile.length());
     }
 
@@ -56,7 +85,7 @@ public class FileUtils {
      */
     public static String getMimeTypeFromFile(Context activityContext, File currentFile) {
         Uri currentFileUri = Uri.fromFile(currentFile);
-        String mimeType = null;
+        String mimeType;
         if (ContentResolver.SCHEME_CONTENT.equals(currentFileUri.getScheme())) {
             ContentResolver cr = activityContext.getContentResolver();
             mimeType = cr.getType(currentFileUri);
@@ -84,25 +113,31 @@ public class FileUtils {
         try {
             activityContext.startActivity(openAppChooserIntent);
         } catch (Exception e) {
-            AppUtils.showToastMessage(activityContext,e.getMessage());
+            AppUtils.showToastMessage(activityContext, e.getMessage());
         }
     }
 
     public static File getFileFromVolumeUuid(String volumeUuid) {
 
         //Default case returns internal storage | /storage/emulated/0/
-        if(volumeUuid == null)
+        if (volumeUuid == null)
             return Environment.getExternalStorageDirectory();
 
         //appends uuid to the storage directory
-        return new File("/storage/",volumeUuid);
+        return new File("/storage/", volumeUuid);
     }
 
     public static String getRootDirectoryFileNameFromExternalDirectoryFile(File externalDirectoryFile) {
         return externalDirectoryFile.toString().split("Android")[0];
     }
 
+    public static int getFileAndFolderIconBasedOnTypeAndExtension(Context activityContext, File file) {
+        if (file.isDirectory())
+            return R.drawable.ic_baseline_folder_24;
 
+        return R.drawable.ic_baseline_image_24;
+
+    }
 
 
     public static File getParentFile(File currentFile) {
@@ -112,35 +147,5 @@ public class FileUtils {
         return currentFile.getParentFile();
     }
 
-    public static File getGrandParentFile(File root) {
-        if (root == null)
-            return null;
-
-        if (root.getParentFile() == null)
-            return null;
-        return root.getParentFile().getParentFile();
-    }
-
-    public static List<File> getFolders(File root) {
-        List<File> allFiles = getChildrenForFile(root);
-        List<File> folders = new ArrayList<>();
-
-        for (File file : allFiles) {
-            if (file.isDirectory()) folders.add(file);
-        }
-        return folders;
-
-    }
-
-    public static List<File> getFiles(File root) {
-        List<File> allFiles = getChildrenForFile(root);
-        List<File> files = new ArrayList<>();
-
-        for (File file : allFiles) {
-            if (!file.isDirectory()) files.add(file);
-        }
-        return files;
-
-    }
 
 }
